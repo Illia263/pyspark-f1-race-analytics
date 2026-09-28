@@ -1,0 +1,8 @@
+Task: Build a PySpark pipeline to process high-frequency F1 car telemetry. Read raw telemetry time-series data (speed, track position) and lap summary data extracted via the FastF1 API.
+
+ 1.   Perform a JOIN between the telemetry and lap datasets to enrich each data point with contextual metadata (driver, tyre compound, current tyre age).
+
+ 2.   Utilizing PySpark window functions (Window.partitionBy().orderBy()), calculate the dynamic time intervals between the race leader and trailing drivers across defined micro-sectors.
+
+ 3.   Aggregate the data for degradation analysis: compute the average speed drop in high-speed corners as a function of tyre age (in laps) across different tyre compounds (Soft, Medium, Hard).
+      Load the aggregated insights into a target PostgreSQL data mart table named fact_tyre_performance.
