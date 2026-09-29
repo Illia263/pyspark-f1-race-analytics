@@ -18,7 +18,7 @@ session.load()
 laps_df = session.laps
 laps_df['year'] = args.year
 laps_df['gp'] = args.gp
-laps_df.to_parquet("data/lake/raw/laps", partition_cols=['year', 'gp'])
+laps_df.to_parquet("data/lake/raw/laps", partition_cols=['year', 'gp'], coerce_timestamps='us', allow_truncated_timestamps=True)
 shutil.rmtree(f"data/lake/raw/telemetry/year={args.year}/gp={args.gp}", ignore_errors=True)
 print("Extracting telemetry for all drivers (this might take a minute)...")
 telemetry_frames = []
@@ -36,4 +36,4 @@ telemetry_df = pandas.concat(telemetry_frames, ignore_index=True)
 
 telemetry_df['year'] = args.year
 telemetry_df['gp'] = args.gp
-telemetry_df.to_parquet("data/lake/raw/telemetry/", partition_cols=['year', 'gp'])
+telemetry_df.to_parquet("data/lake/raw/telemetry/", partition_cols=['year', 'gp'], coerce_timestamps='us', allow_truncated_timestamps=True)
