@@ -1,8 +1,10 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import broadcast, lag
 import pyspark.sql.functions as F
 from pyspark.sql.types import DateType
 from pyspark.sql.types import FloatType
 import sys
+from pyspark.sql.window import Window
 if __name__ == "__main__":
     spark = SparkSession.builder \
     .appName("f1_analytics") \
@@ -12,12 +14,55 @@ if __name__ == "__main__":
     try:
         laps_df = spark.read.parquet("data/lake/raw/laps/")
         telemetry_df = spark.read.parquet("data/lake/raw/telemetry/")
-        print("Showing laps_df firsst 5 rows.....")
-        laps_df.show(5)
-        print("SHowing telemetry_df first 5 rows .......")
-        telemetry_df.show(5)
     except Exception as e:
         print(f"Error occured:  {e}")
         sys.exit(1)
+    telemetry = telemetry_df.alias("t")
+    laps = laps_df.alias("l")
+    join_cond = [
+        F.col("t.SessionTime") >= F.col('l.LapStartTime'),
+        F.col('t.SessionTime') <= F.col('l.Time'),
+        F.col('t.DriverNumber') == F.col('l.DriverNumber')
+    ]
+    df_join = telemetry.join(
+        broadcast(laps),
+        on=join_cond,
+        how="inner"
+    )
+    final_df = df_join.select(
+    F.col("t.DriverNumber"),
+    F.col("l.LapNumber"),
+    F.col("l.Compound").alias("TyreCompound"),
+    F.col("l.TyreLife"),
+    F.col("t.SessionTime"),
+    F.col("t.Speed"),
+    F.col("t.RPM"),
+    F.col("t.nGear"),
+    F.col("t.Throttle"),
+    F.col("t.Brake"),
+    F.col("t.X"),
+    F.col("t.Y")
+)
+    window_spec = Window.partitionBy("DriverNumber", "LapNumber").orderBy("SessionTime")
+    df_with_history = final_df.withColumn(
+        "previous_sector",
+        F.lag("SessionTime", 1).over(window_spec)
+    )
+    time_diff_df = df_with_history.withColumn(
+        "time_delta",
+        F.col("SessionTime") - F.col("previous_sector")
+
+    )
+    distatnce_df = time_diff_df.withColumn(
         
-  
+        "speed_ms",
+        F.col("Speed") / 3.6)\
+        .withColumn(
+            "time_s",
+            F.col("time_delta") / 1000000000
+        )\
+        .withColumn(
+            "distance_delta",
+            F.col("speed_ms") * F.col("time_s")
+        )
+     
