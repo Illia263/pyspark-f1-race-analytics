@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:15
+    container_name: f1_data
+    environment:
+      POSTGRES_USER: airflow_user
+      POSTGRES_PASSWORD: f1_data_base
+      POSTGRES_DB: f1_analytics
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  airflow_spark:
+    build: .  
+    container_name: f1_airflow
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW_CONN_POSTGRES_F1=postgresql://airflow_user:f1_data_base@postgres_db:5432/f1_analytics
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags   
+      - ./data:/opt/airflow/data
+      - ./scripts:/opt/airflow/scripts
+      - ./logs:/opt/airflow/logs
+    command: airflow standalone    
+    depends_on:
+      - postgres_db 
+
+volumes:
+  postgres_data:

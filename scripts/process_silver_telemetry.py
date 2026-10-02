@@ -1,14 +1,12 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import broadcast, lag
 import pyspark.sql.functions as F
-from pyspark.sql.types import DateType
-from pyspark.sql.types import FloatType
 import sys
 from pyspark.sql.window import Window
+import shutil
 if __name__ == "__main__":
     spark = SparkSession.builder \
     .appName("f1_analytics") \
-    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0")\
     .config("spark.driver.memory", "8g")\
     .getOrCreate()
     try:
@@ -53,7 +51,7 @@ if __name__ == "__main__":
         F.col("SessionTime") - F.col("previous_sector")
 
     )
-    distatnce_df = time_diff_df.withColumn(
+    distance_df = time_diff_df.withColumn(
         
         "speed_ms",
         F.col("Speed") / 3.6)\
@@ -65,4 +63,12 @@ if __name__ == "__main__":
             "distance_delta",
             F.col("speed_ms") * F.col("time_s")
         )
+    distance_running_total_df = distance_df.withColumn(
+        "total_dist_so_far",
+        F.sum("distance_delta").over(window_spec)
+    )
+    shutil.rmtree("data/lake/silver/silver_telemetry", ignore_errors=True)
+    distance_running_total_df.write \
+        .mode("overwrite") \
+        .parquet("data/lake/silver/silver_telemetry")
      
