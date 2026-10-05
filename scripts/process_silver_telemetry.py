@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import broadcast, lag
 import pyspark.sql.functions as F
 import sys
-from pyspark.sql.window import Window
+from pyspark.sql.window      import Window
 import shutil
 if __name__ == "__main__":
     spark = SparkSession.builder \
@@ -10,8 +10,8 @@ if __name__ == "__main__":
     .config("spark.driver.memory", "8g")\
     .getOrCreate()
     try:
-        laps_df = spark.read.parquet("data/lake/raw/laps/")
-        telemetry_df = spark.read.parquet("data/lake/raw/telemetry/")
+        laps_df = spark.read.parquet("/opt/airflow/data/lake/raw/laps/")
+        telemetry_df = spark.read.parquet("/opt/airflow/data/lake/raw/telemetry/")
     except Exception as e:
         print(f"Error occured:  {e}")
         sys.exit(1)
@@ -28,6 +28,8 @@ if __name__ == "__main__":
         how="inner"
     )
     final_df = df_join.select(
+    F.col("l.winner"),
+    F.col("l.fastest_lap_driver"),
     F.col("t.DriverNumber"),
     F.col("l.LapNumber"),
     F.col("l.Compound").alias("TyreCompound"),
@@ -39,7 +41,9 @@ if __name__ == "__main__":
     F.col("t.Throttle"),
     F.col("t.Brake"),
     F.col("t.X"),
-    F.col("t.Y")
+    F.col("t.Y"),
+    F.col("l.year"),
+    F.col("l.track")
 )
     window_spec = Window.partitionBy("DriverNumber", "LapNumber").orderBy("SessionTime")
     df_with_history = final_df.withColumn(
@@ -67,8 +71,8 @@ if __name__ == "__main__":
         "total_dist_so_far",
         F.sum("distance_delta").over(window_spec)
     )
-    shutil.rmtree("data/lake/silver/silver_telemetry", ignore_errors=True)
+    shutil.rmtree("opt/airflow/data/lake/silver/silver_telemetry", ignore_errors=True)
     distance_running_total_df.write \
         .mode("overwrite") \
-        .parquet("data/lake/silver/silver_telemetry")
+        .parquet("opt/airflow/data/lake/silver/silver_telemetry")
      

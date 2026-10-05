@@ -1,0 +1,19 @@
+[2026-10-05T17:42:35.410+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-10-05T17:42:35.429+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.validate_data manual__2026-10-05T17:42:29+00:00 [queued]>
+[2026-10-05T17:42:35.433+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.validate_data manual__2026-10-05T17:42:29+00:00 [queued]>
+[2026-10-05T17:42:35.434+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-10-05T17:42:35.442+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): validate_data> on 2026-10-05 17:42:29+00:00
+[2026-10-05T17:42:35.447+0000] {standard_task_runner.py:63} INFO - Started process 587 to run task
+[2026-10-05T17:42:35.450+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'validate_data', 'manual__2026-10-05T17:42:29+00:00', '--job-id', '25', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmpixoog_di']
+[2026-10-05T17:42:35.451+0000] {standard_task_runner.py:91} INFO - Job 25: Subtask validate_data
+[2026-10-05T17:42:35.483+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.validate_data manual__2026-10-05T17:42:29+00:00 [running]> on host 92542028ff84
+[2026-10-05T17:42:35.536+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='validate_data' AIRFLOW_CTX_EXECUTION_DATE='2026-10-05T17:42:29+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-10-05T17:42:29+00:00'
+[2026-10-05T17:42:35.536+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-10-05T17:42:36.017+0000] {logging_mixin.py:188} WARNING - req         WARNING 	DEFAULT CACHE ENABLED! (48.0 KB) /home/airflow/.cache/fastf1
+[2026-10-05T17:42:36.016+0000] {req.py:547} WARNING - DEFAULT CACHE ENABLED! (48.0 KB) /home/airflow/.cache/fastf1
+[2026-10-05T17:42:36.041+0000] {python.py:237} INFO - Done. Returned value was: {'year': 2023, 'track': 'Monza'}
+[2026-10-05T17:42:36.041+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-10-05T17:42:36.052+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=f1_data_analytics, task_id=validate_data, run_id=manual__2026-10-05T17:42:29+00:00, execution_date=20261005T174229, start_date=20261005T174235, end_date=20261005T174236
+[2026-10-05T17:42:36.103+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-10-05T17:42:36.138+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-10-05T17:42:36.142+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

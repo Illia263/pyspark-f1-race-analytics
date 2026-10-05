@@ -1,0 +1,149 @@
+[2026-10-05T19:30:56.228+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-10-05T19:30:56.248+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.silver_script manual__2026-10-05T19:30:08+00:00 [queued]>
+[2026-10-05T19:30:56.252+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.silver_script manual__2026-10-05T19:30:08+00:00 [queued]>
+[2026-10-05T19:30:56.252+0000] {taskinstance.py:2306} INFO - Starting attempt 3 of 4
+[2026-10-05T19:30:56.262+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): silver_script> on 2026-10-05 19:30:08+00:00
+[2026-10-05T19:30:56.268+0000] {standard_task_runner.py:63} INFO - Started process 1589 to run task
+[2026-10-05T19:30:56.270+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'silver_script', 'manual__2026-10-05T19:30:08+00:00', '--job-id', '28', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmpp8crg8sk']
+[2026-10-05T19:30:56.272+0000] {standard_task_runner.py:91} INFO - Job 28: Subtask silver_script
+[2026-10-05T19:30:56.299+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.silver_script manual__2026-10-05T19:30:08+00:00 [running]> on host 5314212cbeb0
+[2026-10-05T19:30:56.356+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='silver_script' AIRFLOW_CTX_EXECUTION_DATE='2026-10-05T19:30:08+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-10-05T19:30:08+00:00'
+[2026-10-05T19:30:56.357+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-10-05T19:30:56.357+0000] {f1_pipeline_dag.py:95} INFO - Running silver pyspark script
+[2026-10-05T19:31:00.886+0000] {f1_pipeline_dag.py:104} ERROR - === STDOUT ===
+Error occured:  An error occurred while calling o26.parquet.
+: java.lang.AssertionError: assertion failed: Conflicting partition column names detected:
+
+	Partition column name list #0: year, gp
+	Partition column name list #1: year, track
+
+For partitioned table directories, data files should only live in leaf directories.
+And directories at the same level should have the same partition column name.
+Please check the following directories for unexpected files or inconsistent partition column names:
+
+	file:/opt/airflow/data/lake/raw/laps/year=2023/gp=monza
+	file:/opt/airflow/data/lake/raw/laps/year=2023/gp=Monza
+	file:/opt/airflow/data/lake/raw/laps/year=2023/track=Monza
+	at scala.Predef$.assert(Predef.scala:223)
+	at org.apache.spark.sql.execution.datasources.PartitioningUtils$.resolvePartitions(PartitioningUtils.scala:388)
+	at org.apache.spark.sql.execution.datasources.PartitioningUtils$.parsePartitions(PartitioningUtils.scala:181)
+	at org.apache.spark.sql.execution.datasources.PartitioningUtils$.parsePartitions(PartitioningUtils.scala:110)
+	at org.apache.spark.sql.execution.datasources.PartitioningAwareFileIndex.inferPartitioning(PartitioningAwareFileIndex.scala:201)
+	at org.apache.spark.sql.execution.datasources.InMemoryFileIndex.partitionSpec(InMemoryFileIndex.scala:75)
+	at org.apache.spark.sql.execution.datasources.PartitioningAwareFileIndex.partitionSchema(PartitioningAwareFileIndex.scala:51)
+	at org.apache.spark.sql.execution.datasources.DataSource.getOrInferFileFormatSchema(DataSource.scala:167)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:407)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.parquet(DataFrameReader.scala:563)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+
+[2026-10-05T19:31:00.887+0000] {f1_pipeline_dag.py:105} ERROR - === STDERR ===
+/home/airflow/.local/lib/python3.11/site-packages/pyspark/bin/load-spark-env.sh: line 68: ps: command not found
+26/10/05 19:30:58 INFO SparkContext: Running Spark version 3.5.1
+26/10/05 19:30:58 INFO SparkContext: OS info Linux, 7.0.0-31-generic, amd64
+26/10/05 19:30:58 INFO SparkContext: Java version 17.0.20.1
+26/10/05 19:30:58 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/10/05 19:30:58 INFO ResourceUtils: ==============================================================
+26/10/05 19:30:58 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/10/05 19:30:58 INFO ResourceUtils: ==============================================================
+26/10/05 19:30:58 INFO SparkContext: Submitted application: f1_analytics
+26/10/05 19:30:58 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/10/05 19:30:58 INFO ResourceProfile: Limiting resource is cpu
+26/10/05 19:30:58 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/10/05 19:30:58 INFO SecurityManager: Changing view acls to: airflow
+26/10/05 19:30:58 INFO SecurityManager: Changing modify acls to: airflow
+26/10/05 19:30:58 INFO SecurityManager: Changing view acls groups to: 
+26/10/05 19:30:58 INFO SecurityManager: Changing modify acls groups to: 
+26/10/05 19:30:58 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: airflow; groups with view permissions: EMPTY; users with modify permissions: airflow; groups with modify permissions: EMPTY
+26/10/05 19:30:59 INFO Utils: Successfully started service 'sparkDriver' on port 42961.
+26/10/05 19:30:59 INFO SparkEnv: Registering MapOutputTracker
+26/10/05 19:30:59 INFO SparkEnv: Registering BlockManagerMaster
+26/10/05 19:30:59 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/10/05 19:30:59 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/10/05 19:30:59 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/10/05 19:30:59 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-00c40892-d126-47f4-a5c9-c94e6b072adf
+26/10/05 19:30:59 INFO MemoryStore: MemoryStore started with capacity 434.4 MiB
+26/10/05 19:30:59 INFO SparkEnv: Registering OutputCommitCoordinator
+26/10/05 19:30:59 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/10/05 19:30:59 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/10/05 19:30:59 INFO Executor: Starting executor ID driver on host 5314212cbeb0
+26/10/05 19:30:59 INFO Executor: OS info Linux, 7.0.0-31-generic, amd64
+26/10/05 19:30:59 INFO Executor: Java version 17.0.20.1
+26/10/05 19:30:59 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/10/05 19:30:59 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@6c1d122a for default.
+26/10/05 19:30:59 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 43109.
+26/10/05 19:30:59 INFO NettyBlockTransferService: Server created on 5314212cbeb0:43109
+26/10/05 19:30:59 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/10/05 19:30:59 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 5314212cbeb0, 43109, None)
+26/10/05 19:30:59 INFO BlockManagerMasterEndpoint: Registering block manager 5314212cbeb0:43109 with 434.4 MiB RAM, BlockManagerId(driver, 5314212cbeb0, 43109, None)
+26/10/05 19:30:59 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 5314212cbeb0, 43109, None)
+26/10/05 19:30:59 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 5314212cbeb0, 43109, None)
+26/10/05 19:30:59 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/10/05 19:31:00 INFO SharedState: Warehouse path is 'file:/opt/airflow/spark-warehouse'.
+26/10/05 19:31:00 INFO InMemoryFileIndex: It took 37 ms to list leaf files for 1 paths.
+26/10/05 19:31:00 INFO SparkContext: Invoking stop() from shutdown hook
+26/10/05 19:31:00 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/10/05 19:31:00 INFO SparkUI: Stopped Spark web UI at http://5314212cbeb0:4040
+26/10/05 19:31:00 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/10/05 19:31:00 INFO MemoryStore: MemoryStore cleared
+26/10/05 19:31:00 INFO BlockManager: BlockManager stopped
+26/10/05 19:31:00 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/10/05 19:31:00 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/10/05 19:31:00 INFO SparkContext: Successfully stopped SparkContext
+26/10/05 19:31:00 INFO ShutdownHookManager: Shutdown hook called
+26/10/05 19:31:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-fd4937b7-81b1-4f77-9846-6964300e3ada
+26/10/05 19:31:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-ca40fd5f-270e-45d4-8150-94f85d29c338
+26/10/05 19:31:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-ca40fd5f-270e-45d4-8150-94f85d29c338/pyspark-4f095aa4-e9db-418e-9922-e2530105ca5d
+
+[2026-10-05T19:31:00.887+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-10-05T19:31:00.887+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/f1_pipeline_dag.py", line 106, in silver_script
+    raise e
+  File "/opt/airflow/dags/f1_pipeline_dag.py", line 98, in silver_script
+    result = subprocess.run([
+             ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['spark-submit', '/opt/airflow/scripts/process_silver_telemetry.py']' returned non-zero exit status 1.
+[2026-10-05T19:31:00.898+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=f1_data_analytics, task_id=silver_script, run_id=manual__2026-10-05T19:30:08+00:00, execution_date=20261005T193008, start_date=20261005T193056, end_date=20261005T193100
+[2026-10-05T19:31:00.912+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 28 for task silver_script (Command '['spark-submit', '/opt/airflow/scripts/process_silver_telemetry.py']' returned non-zero exit status 1.; 1589)
+[2026-10-05T19:31:00.934+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-10-05T19:31:00.965+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-10-05T19:31:00.966+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

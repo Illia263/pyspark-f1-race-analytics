@@ -18,7 +18,7 @@ services:
     container_name: f1_airflow
     environment:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
-      - AIRFLOW_CONN_POSTGRES_F1=postgresql://airflow_user:f1_data_base@postgres_db:5432/f1_analytics
+      - AIRFLOW_CONN_POSTGRES_CONN_ID=postgresql://airflow_user:f1_data_base@postgres_db:5432/f1_analytics
     ports:
       - "8080:8080"
     volumes:

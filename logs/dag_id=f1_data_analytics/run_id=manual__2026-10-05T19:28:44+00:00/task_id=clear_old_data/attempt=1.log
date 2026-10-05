@@ -1,0 +1,74 @@
+[2026-10-05T19:29:12.838+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-10-05T19:29:12.857+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.clear_old_data manual__2026-10-05T19:28:44+00:00 [queued]>
+[2026-10-05T19:29:12.861+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.clear_old_data manual__2026-10-05T19:28:44+00:00 [queued]>
+[2026-10-05T19:29:12.861+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-10-05T19:29:12.871+0000] {taskinstance.py:2330} INFO - Executing <Task(PostgresOperator): clear_old_data> on 2026-10-05 19:28:44+00:00
+[2026-10-05T19:29:12.876+0000] {standard_task_runner.py:63} INFO - Started process 1182 to run task
+[2026-10-05T19:29:12.878+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'clear_old_data', 'manual__2026-10-05T19:28:44+00:00', '--job-id', '22', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmp7cie2dx9']
+[2026-10-05T19:29:12.880+0000] {standard_task_runner.py:91} INFO - Job 22: Subtask clear_old_data
+[2026-10-05T19:29:12.908+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.clear_old_data manual__2026-10-05T19:28:44+00:00 [running]> on host 5314212cbeb0
+[2026-10-05T19:29:12.988+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='clear_old_data' AIRFLOW_CTX_EXECUTION_DATE='2026-10-05T19:28:44+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-10-05T19:28:44+00:00'
+[2026-10-05T19:29:12.989+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-10-05T19:29:12.989+0000] {sql.py:276} INFO - Executing: 
+            CREATE TABLE IF NOT EXISTS race_and_tyre_performance (
+                year INTEGER,
+                track VARCHAR,
+                winner VARCHAR,
+                fastest_lap_driver VARCHAR,
+                TyreCompound VARCHAR,
+                TyreLife FLOAT,
+                avg_speed FLOAT,
+                previous_lap_speed FLOAT,
+                speed_drop FLOAT
+            )
+            DELETE FROM race_and_tyre_performance
+            WHERE track = 'Monza' AND year = 2023;
+[2026-10-05T19:29:12.990+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2026-10-05T19:29:12.990+0000] {base.py:84} INFO - Using connection ID 'postgres_conn_id' for task execution.
+[2026-10-05T19:29:13.037+0000] {base.py:84} INFO - Using connection ID 'postgres_conn_id' for task execution.
+[2026-10-05T19:29:13.044+0000] {sql.py:487} INFO - Running statement: 
+            CREATE TABLE IF NOT EXISTS race_and_tyre_performance (
+                year INTEGER,
+                track VARCHAR,
+                winner VARCHAR,
+                fastest_lap_driver VARCHAR,
+                TyreCompound VARCHAR,
+                TyreLife FLOAT,
+                avg_speed FLOAT,
+                previous_lap_speed FLOAT,
+                speed_drop FLOAT
+            )
+            DELETE FROM race_and_tyre_performance
+            WHERE track = 'Monza' AND year = 2023;, parameters: None
+[2026-10-05T19:29:13.044+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-10-05T19:29:13.045+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+             ^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/providers/common/sql/hooks/sql.py", line 435, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/providers/common/sql/hooks/sql.py", line 492, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.SyntaxError: syntax error at or near "DELETE"
+LINE 13:             DELETE FROM race_and_tyre_performance
+                     ^
+
+[2026-10-05T19:29:13.049+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=f1_data_analytics, task_id=clear_old_data, run_id=manual__2026-10-05T19:28:44+00:00, execution_date=20261005T192844, start_date=20261005T192912, end_date=20261005T192913
+[2026-10-05T19:29:13.056+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 22 for task clear_old_data (syntax error at or near "DELETE"
+LINE 13:             DELETE FROM race_and_tyre_performance
+                     ^
+; 1182)
+[2026-10-05T19:29:13.091+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-10-05T19:29:13.110+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py:1297 AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `airflow.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+[2026-10-05T19:29:13.128+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-10-05T19:29:13.138+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

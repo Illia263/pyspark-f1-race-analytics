@@ -1,0 +1,49 @@
+[2026-10-05T19:38:52.501+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-10-05T19:38:52.520+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.clear_old_data manual__2026-10-05T19:38:25+00:00 [queued]>
+[2026-10-05T19:38:52.524+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.clear_old_data manual__2026-10-05T19:38:25+00:00 [queued]>
+[2026-10-05T19:38:52.525+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-10-05T19:38:52.534+0000] {taskinstance.py:2330} INFO - Executing <Task(PostgresOperator): clear_old_data> on 2026-10-05 19:38:25+00:00
+[2026-10-05T19:38:52.540+0000] {standard_task_runner.py:63} INFO - Started process 2579 to run task
+[2026-10-05T19:38:52.542+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'clear_old_data', 'manual__2026-10-05T19:38:25+00:00', '--job-id', '38', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmp42_opre4']
+[2026-10-05T19:38:52.543+0000] {standard_task_runner.py:91} INFO - Job 38: Subtask clear_old_data
+[2026-10-05T19:38:52.568+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.clear_old_data manual__2026-10-05T19:38:25+00:00 [running]> on host 5314212cbeb0
+[2026-10-05T19:38:52.615+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='clear_old_data' AIRFLOW_CTX_EXECUTION_DATE='2026-10-05T19:38:25+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-10-05T19:38:25+00:00'
+[2026-10-05T19:38:52.616+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-10-05T19:38:52.616+0000] {sql.py:276} INFO - Executing: 
+            CREATE TABLE IF NOT EXISTS race_and_tyre_performance (
+                year INTEGER,
+                track VARCHAR,
+                winner VARCHAR,
+                fastest_lap_driver VARCHAR,
+                TyreCompound VARCHAR,
+                TyreLife FLOAT,
+                avg_speed FLOAT,
+                previous_lap_speed FLOAT,
+                speed_drop FLOAT
+            );
+            DELETE FROM race_and_tyre_performance
+            WHERE track = 'Monza' AND year = 2023;
+[2026-10-05T19:38:52.617+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2026-10-05T19:38:52.617+0000] {base.py:84} INFO - Using connection ID 'postgres_conn_id' for task execution.
+[2026-10-05T19:38:52.663+0000] {base.py:84} INFO - Using connection ID 'postgres_conn_id' for task execution.
+[2026-10-05T19:38:52.670+0000] {sql.py:487} INFO - Running statement: 
+            CREATE TABLE IF NOT EXISTS race_and_tyre_performance (
+                year INTEGER,
+                track VARCHAR,
+                winner VARCHAR,
+                fastest_lap_driver VARCHAR,
+                TyreCompound VARCHAR,
+                TyreLife FLOAT,
+                avg_speed FLOAT,
+                previous_lap_speed FLOAT,
+                speed_drop FLOAT
+            );
+            DELETE FROM race_and_tyre_performance
+            WHERE track = 'Monza' AND year = 2023;, parameters: None
+[2026-10-05T19:38:52.671+0000] {sql.py:496} INFO - Rows affected: 69
+[2026-10-05T19:38:52.672+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-10-05T19:38:52.677+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=f1_data_analytics, task_id=clear_old_data, run_id=manual__2026-10-05T19:38:25+00:00, execution_date=20261005T193825, start_date=20261005T193852, end_date=20261005T193852
+[2026-10-05T19:38:52.714+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-10-05T19:38:52.732+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py:1297 AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `airflow.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+[2026-10-05T19:38:52.753+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-10-05T19:38:52.756+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
