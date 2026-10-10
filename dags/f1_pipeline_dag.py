@@ -109,7 +109,7 @@ def telemetry_pipeline():
     middle_scripts_sensor = FileSensor(
         
         task_id="wait_for_data_sensor",
-        filepath="opt/airflow/data/lake/silver/silver_telemetry/_SUCCESS",
+        filepath="/opt/airflow/data/lake/silver/silver_telemetry/_SUCCESS",
         fs_conn_id="fs_default", 
         poke_interval=30,        
         timeout=600,         

@@ -10,7 +10,7 @@ if __name__ == "__main__":
     .config("spark.driver.memory", "4g")\
     .getOrCreate()
     try:
-        file_path = "opt/airflow/data/lake/silver/silver_telemetry"
+        file_path = "/opt/airflow/data/lake/silver/silver_telemetry"
         df = spark.read.parquet(file_path)
     except Exception as e:
         print(f"error occured {e}")
@@ -37,10 +37,10 @@ if __name__ == "__main__":
     ).withColumn(
         "speed_drop", F.round("speed_drop", 2)
     )
-    shutil.rmtree("opt/airflow/data/lake/gold/gold_telemetry", ignore_errors=True)
+    shutil.rmtree("/opt/airflow/data/lake/gold/gold_telemetry", ignore_errors=True)
     tyres_degradation_df.write \
         .mode("overwrite")\
-        .parquet("opt/airflow/data/lake/gold/gold_telemetry")
+        .parquet("/opt/airflow/data/lake/gold/gold_telemetry")
     db_host = os.environ.get('DB_HOST')
     db_port = os.environ.get('DB_PORT', '5432')
     db_name = os.environ.get('DB_NAME')
@@ -59,4 +59,3 @@ if __name__ == "__main__":
             mode="append",
             properties=connection_properties      
         )
-    # docker exec f1_airflow cat standalone_admin_password.txt 

@@ -71,8 +71,8 @@ if __name__ == "__main__":
         "total_dist_so_far",
         F.sum("distance_delta").over(window_spec)
     )
-    shutil.rmtree("opt/airflow/data/lake/silver/silver_telemetry", ignore_errors=True)
+    shutil.rmtree("/opt/airflow/data/lake/silver/silver_telemetry", ignore_errors=True)
     distance_running_total_df.write \
         .mode("overwrite") \
-        .parquet("opt/airflow/data/lake/silver/silver_telemetry")
+        .parquet("/opt/airflow/data/lake/silver/silver_telemetry")
      

@@ -2,7 +2,6 @@
 
 For running the pipeline on a clean machine, the provided data is almost sufficient. You have the complete infrastructure configuration, including Docker Compose, Dockerfile, Python dependencies, and the Airflow DAG setup. However, to execute the pipeline successfully, you must transfer the actual Python worker scripts (`fetch_f1_data.py`, `process_silver_telemetry.py`, and `process_gold_telemetry.py`) referenced by the DAG into the new environment, as their source code is not included in the current context.
 
-Additionally, before running, you need to fix a typo in `f1_pipeline_dag_2.py`: the `filepath` in the `middle_scripts_sensor` task is missing a leading slash (`filepath="opt/airflow/data/lake/silver/silver_telemetry/_SUCCESS"`). Change it to `filepath="/opt/airflow/..."` or the sensor will fail to find the file.
 
 ## Pipeline Deployment Steps
 
