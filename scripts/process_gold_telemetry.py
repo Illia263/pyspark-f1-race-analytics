@@ -16,11 +16,11 @@ if __name__ == "__main__":
         print(f"error occured {e}")
         sys.exit(1)
     filtering_df = df.filter(F.col("nGear").between(4, 6) & (F.col("Speed") > 150))
-    avg_speed_df = filtering_df.groupBy("year", "track", "winner", "fastest_lap_driver", "TyreCompound", "TyreLife").agg(
+    avg_speed_df = filtering_df.groupBy("year", "track", "winner", "fastest_lap_driver", "TyreCompound", "TyreLife", "DriverNumber").agg(
         F.avg("Speed").alias("avg_speed")
     )
 
-    window_spec = Window.partitionBy("year", "track", "winner", "fastest_lap_driver", "TyreCompound").orderBy("TyreLife")
+    window_spec = Window.partitionBy("year", "track", "winner", "fastest_lap_driver", "DriverNumber", "TyreCompound").orderBy("TyreLife")
 
     tyres_degradation_df = avg_speed_df.withColumn(
         "previous_lap_speed",
