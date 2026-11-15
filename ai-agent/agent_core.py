@@ -32,16 +32,26 @@ agent_executor = create_sql_agent(
     use_query_checker=False,
     verbose=True
 )
+def ask_f1_agent(question):
+    response = agent_executor.invoke({"input" : user_input})
+    output = response['output']
+    if isinstance(output, list):
+        output = "\n".join(
+            block.get("text", "") for block in output if isinstance(block, dict)
+        )
+    return output
+
 if __name__ == "__main__":
-    print("AI agent works! Type your question('exit' to exit): ")
+    print("AI agent works! Type your question('exit'/'quit' to exit): ")
     while True:
         user_input = input(">>")
         if user_input.lower() in ['exit', 'quit']:
             break
-        try:
-            response = agent_executor.invoke({"input" : user_input})
-            print(f"Response: {response['output']}")
+        try:    
+            answer = ask_f1_agent()
+            print(f"\n {answer}\n")
             print("-" * 50)
+            
         except Exception as e:
             print(f"Error was ouccured: {e}")
 #який пілот виграв гонку  в сільверстоуні в 2026 році?
