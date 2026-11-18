@@ -3,22 +3,30 @@ from langchain_community.utilities import SQLDatabase
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from dotenv import load_dotenv
+load_dotenv()
+db_user = os.getenv("POSTGRES_USER")
+db_password = os.getenv("POSTGRES_PASSWORD")
+db_host = os.getenv("DB_HOST", "localhost")
+db_port = os.getenv("DB_PORT", "5432")
+db_name = os.getenv("POSTGRES_DB")
 
-
-db_url = "postgresql://ai_reader:secure_pass@localhost:5432/f1_analytics"
+db_uri = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+db = SQLDatabase.from_uri(db_uri)
 db = SQLDatabase.from_uri(
-    db_url,
-    include_tables=["race_and_tyre_performance"]
+    db_uri,
+    include_tables=["race_and_tyre_performance"],
+    sample_rows_in_table_info=2
 )
 
-llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0, timeout=20, max_retries=1)
+llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0, timeout=120, max_retries=3)
 prompt = ChatPromptTemplate.from_messages([
     (
         "system",
         "You are a Formula 1 SQL expert interacting with a PostgreSQL database. "
         "First, check the available tables and their schema. "
         "Then write and execute a syntactically correct SELECT query to answer the user's question. "
-        "Answer in the same language as the user's question."
+        "CRITICAL RULE: You MUST reply in the EXACT SAME LANGUAGE as the user's question (English -> English, Ukrainian -> Ukrainian)."
     ),
     ("human", "{input}"),
     MessagesPlaceholder("agent_scratchpad"),
@@ -30,10 +38,11 @@ agent_executor = create_sql_agent(
     prompt=prompt,
     agent_type="tool-calling",
     use_query_checker=False,
+
     verbose=True
 )
 def ask_f1_agent(question):
-    response = agent_executor.invoke({"input" : user_input})
+    response = agent_executor.invoke({"input" : question})
     output = response['output']
     if isinstance(output, list):
         output = "\n".join(

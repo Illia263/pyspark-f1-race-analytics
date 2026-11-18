@@ -2,5 +2,8 @@ data/
 .vscode/
 venv/
 bootstrap123.py
+.env
 __pycache__/
  *.pyc
+
+
