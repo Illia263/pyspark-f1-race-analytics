@@ -79,6 +79,7 @@ def telemetry_pipeline():
                 TyreLife FLOAT,
                 avg_speed FLOAT,
                 previous_lap_speed FLOAT,
+                DriverNumber VARCHAR,
                 speed_drop FLOAT
             );
             DELETE FROM race_and_tyre_performance

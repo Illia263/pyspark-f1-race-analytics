@@ -1,0 +1,20 @@
+[2026-11-19T18:39:18.926+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-11-19T18:39:18.967+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.silver_script manual__2026-11-19T18:37:25+00:00 [queued]>
+[2026-11-19T18:39:18.978+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.silver_script manual__2026-11-19T18:37:25+00:00 [queued]>
+[2026-11-19T18:39:18.978+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 4
+[2026-11-19T18:39:18.995+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): silver_script> on 2026-11-19 18:37:25+00:00
+[2026-11-19T18:39:19.005+0000] {standard_task_runner.py:63} INFO - Started process 2500 to run task
+[2026-11-19T18:39:19.009+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'silver_script', 'manual__2026-11-19T18:37:25+00:00', '--job-id', '36', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmphus30np8']
+[2026-11-19T18:39:19.012+0000] {standard_task_runner.py:91} INFO - Job 36: Subtask silver_script
+[2026-11-19T18:39:19.064+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.silver_script manual__2026-11-19T18:37:25+00:00 [running]> on host 26d48fee98d1
+[2026-11-19T18:39:19.165+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='silver_script' AIRFLOW_CTX_EXECUTION_DATE='2026-11-19T18:37:25+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-11-19T18:37:25+00:00'
+[2026-11-19T18:39:19.166+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-11-19T18:39:19.167+0000] {f1_pipeline_dag.py:96} INFO - Running silver pyspark script
+[2026-11-19T18:42:18.537+0000] {f1_pipeline_dag.py:104} INFO - === STDOUT ===
+
+[2026-11-19T18:42:18.560+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-11-19T18:42:18.560+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-11-19T18:42:18.568+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=f1_data_analytics, task_id=silver_script, run_id=manual__2026-11-19T18:37:25+00:00, execution_date=20261119T183725, start_date=20261119T183918, end_date=20261119T184218
+[2026-11-19T18:42:18.609+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-11-19T18:42:18.636+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-11-19T18:42:18.640+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

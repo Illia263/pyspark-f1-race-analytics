@@ -1,0 +1,81 @@
+[2026-11-20T18:20:44.766+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-11-20T18:20:44.786+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.fetching manual__2026-11-20T17:46:04+00:00 [queued]>
+[2026-11-20T18:20:44.791+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.fetching manual__2026-11-20T17:46:04+00:00 [queued]>
+[2026-11-20T18:20:44.791+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-11-20T18:20:44.800+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): fetching> on 2026-11-20 17:46:04+00:00
+[2026-11-20T18:20:44.807+0000] {standard_task_runner.py:63} INFO - Started process 13472 to run task
+[2026-11-20T18:20:44.810+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'fetching', 'manual__2026-11-20T17:46:04+00:00', '--job-id', '106', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmpyqzwfwku']
+[2026-11-20T18:20:44.811+0000] {standard_task_runner.py:91} INFO - Job 106: Subtask fetching
+[2026-11-20T18:20:44.841+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.fetching manual__2026-11-20T17:46:04+00:00 [running]> on host 26d48fee98d1
+[2026-11-20T18:20:44.901+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='fetching' AIRFLOW_CTX_EXECUTION_DATE='2026-11-20T17:46:04+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-11-20T17:46:04+00:00'
+[2026-11-20T18:20:44.902+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-11-20T18:20:44.903+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-11-20T18:20:44.903+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', "python /opt/airflow/scripts/fetch_f1_data.py --year 2023 --track 'Canada'"]
+[2026-11-20T18:20:44.914+0000] {subprocess.py:86} INFO - Output:
+[2026-11-20T18:20:46.326+0000] {subprocess.py:93} INFO - core           INFO 	Loading data for Canadian Grand Prix - Race [v3.8.3]
+[2026-11-20T18:20:46.327+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for session_info. Loading data...
+[2026-11-20T18:20:46.327+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching session info data...
+[2026-11-20T18:20:47.177+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load session info data!
+[2026-11-20T18:20:47.178+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for driver_info. Loading data...
+[2026-11-20T18:20:47.178+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching driver list...
+[2026-11-20T18:20:47.794+0000] {subprocess.py:93} INFO - core        WARNING 	Failed to load extended driver information!
+[2026-11-20T18:20:48.446+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for session_status_data. Loading data...
+[2026-11-20T18:20:48.446+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching session status data...
+[2026-11-20T18:20:49.022+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load session status data!
+[2026-11-20T18:20:49.022+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for lap_count. Loading data...
+[2026-11-20T18:20:49.023+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching lap count data...
+[2026-11-20T18:20:49.635+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load total lap count!
+[2026-11-20T18:20:49.636+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for track_status_data. Loading data...
+[2026-11-20T18:20:49.636+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching track status data...
+[2026-11-20T18:20:50.251+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load track status data!
+[2026-11-20T18:20:50.252+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for _extended_timing_data. Loading data...
+[2026-11-20T18:20:50.252+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching timing data...
+[2026-11-20T18:20:50.864+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load timing data!
+[2026-11-20T18:20:51.185+0000] {subprocess.py:93} INFO - core        WARNING 	Failed to add first lap time from Ergast for drivers: ['1', '44', '14', '63', '31', '27', '81', '4', '16', '23', '55', '11', '10', '18', '20', '77', '21', '2', '24', '22']
+[2026-11-20T18:20:51.185+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for car_data. Loading data...
+[2026-11-20T18:20:51.185+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching car data...
+[2026-11-20T18:20:51.784+0000] {subprocess.py:93} INFO - core        WARNING 	Car telemetry data is unavailable!
+[2026-11-20T18:20:51.784+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for position_data. Loading data...
+[2026-11-20T18:20:51.785+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching position data...
+[2026-11-20T18:20:52.400+0000] {subprocess.py:93} INFO - core        WARNING 	Car position data is unavailable!
+[2026-11-20T18:20:52.400+0000] {subprocess.py:93} INFO - core        WARNING 	Failed to determine `Session.t0_date`!
+[2026-11-20T18:20:52.400+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for weather_data. Loading data...
+[2026-11-20T18:20:52.401+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching weather data...
+[2026-11-20T18:20:53.014+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load weather data!
+[2026-11-20T18:20:53.015+0000] {subprocess.py:93} INFO - req            INFO 	No cached data found for race_control_messages. Loading data...
+[2026-11-20T18:20:53.015+0000] {subprocess.py:93} INFO - _api           INFO 	Fetching race control messages...
+[2026-11-20T18:20:53.629+0000] {subprocess.py:93} INFO - logger      WARNING 	Failed to load race control messages!
+[2026-11-20T18:20:53.630+0000] {subprocess.py:93} INFO - core           INFO 	Finished loading data for 20 drivers: ['1', '14', '44', '16', '55', '11', '23', '31', '18', '77', '81', '10', '4', '22', '27', '24', '20', '21', '63', '2']
+[2026-11-20T18:20:53.631+0000] {subprocess.py:93} INFO - Fetching data for 2023 Canada...
+[2026-11-20T18:20:53.632+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2026-11-20T18:20:53.632+0000] {subprocess.py:93} INFO -   File "/opt/airflow/scripts/fetch_f1_data.py", line 23, in <module>
+[2026-11-20T18:20:53.632+0000] {subprocess.py:93} INFO -     fastest_driver_num = session.laps.pick_fastest()['DriverNumber']
+[2026-11-20T18:20:53.632+0000] {subprocess.py:93} INFO -                          ^^^^^^^^^^^^
+[2026-11-20T18:20:53.632+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/fastf1/core.py", line 1272, in laps
+[2026-11-20T18:20:53.633+0000] {subprocess.py:93} INFO -     return self._get_property_warn_not_loaded('_laps')
+[2026-11-20T18:20:53.633+0000] {subprocess.py:93} INFO -            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-11-20T18:20:53.633+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/fastf1/core.py", line 1231, in _get_property_warn_not_loaded
+[2026-11-20T18:20:53.633+0000] {subprocess.py:93} INFO -     raise exceptions.DataNotLoadedError(
+[2026-11-20T18:20:53.633+0000] {subprocess.py:93} INFO - fastf1.exceptions.DataNotLoadedError: The data you are trying to access has not been loaded yet. See `Session.load`
+[2026-11-20T18:20:53.790+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-11-20T18:20:53.791+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-11-20T18:20:53.796+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-11-20T18:20:53.800+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=f1_data_analytics, task_id=fetching, run_id=manual__2026-11-20T17:46:04+00:00, execution_date=20261120T174604, start_date=20261120T182044, end_date=20261120T182053
+[2026-11-20T18:20:53.811+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 106 for task fetching (Bash command failed. The command returned a non-zero exit code 1.; 13472)
+[2026-11-20T18:20:53.847+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-11-20T18:20:53.862+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py:1297 AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `airflow.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+[2026-11-20T18:20:53.880+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-11-20T18:20:53.886+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

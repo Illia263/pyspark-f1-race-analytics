@@ -1,0 +1,444 @@
+[2026-11-19T17:43:20.467+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-11-19T17:43:20.490+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.gold_script manual__2026-11-19T17:41:58+00:00 [queued]>
+[2026-11-19T17:43:20.496+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.gold_script manual__2026-11-19T17:41:58+00:00 [queued]>
+[2026-11-19T17:43:20.496+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-11-19T17:43:20.505+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): gold_script> on 2026-11-19 17:41:58+00:00
+[2026-11-19T17:43:20.511+0000] {standard_task_runner.py:63} INFO - Started process 1789 to run task
+[2026-11-19T17:43:20.513+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'gold_script', 'manual__2026-11-19T17:41:58+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmpwoh9qi2d']
+[2026-11-19T17:43:20.515+0000] {standard_task_runner.py:91} INFO - Job 20: Subtask gold_script
+[2026-11-19T17:43:20.543+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.gold_script manual__2026-11-19T17:41:58+00:00 [running]> on host df86a743aa19
+[2026-11-19T17:43:20.600+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='gold_script' AIRFLOW_CTX_EXECUTION_DATE='2026-11-19T17:41:58+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-11-19T17:41:58+00:00'
+[2026-11-19T17:43:20.601+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-11-19T17:43:20.602+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2026-11-19T17:43:20.602+0000] {base.py:84} INFO - Using connection ID 'postgres_conn_id' for task execution.
+[2026-11-19T17:43:20.602+0000] {f1_pipeline_dag.py:26} INFO - Running spark script: /opt/airflow/scripts/process_gold_telemetry.py
+[2026-11-19T17:43:33.096+0000] {f1_pipeline_dag.py:35} ERROR - === STDOUT ===
+:: loading settings :: url = jar:file:/home/airflow/.local/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Traceback (most recent call last):
+  File "/opt/airflow/scripts/process_gold_telemetry.py", line 57, in <module>
+    .jdbc(url=jdbc_url,
+     ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pyspark/python/lib/pyspark.zip/pyspark/sql/readwriter.py", line 1984, in jdbc
+  File "/home/airflow/.local/lib/python3.11/site-packages/pyspark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+  File "/home/airflow/.local/lib/python3.11/site-packages/pyspark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 185, in deco
+pyspark.errors.exceptions.captured.AnalysisException: Column DriverNumber not found in schema Some(StructType(StructField(year,IntegerType,true),StructField(track,StringType,true),StructField(winner,StringType,true),StructField(fastest_lap_driver,StringType,true),StructField(tyrecompound,StringType,true),StructField(tyrelife,DoubleType,true),StructField(avg_speed,DoubleType,true),StructField(previous_lap_speed,DoubleType,true),StructField(speed_drop,DoubleType,true))).
+
+[2026-11-19T17:43:33.097+0000] {f1_pipeline_dag.py:36} ERROR - === STDERR ===
+/home/airflow/.local/lib/python3.11/site-packages/pyspark/bin/load-spark-env.sh: line 68: ps: command not found
+Ivy Default Cache set to: /home/airflow/.ivy2/cache
+The jars for the packages stored in: /home/airflow/.ivy2/jars
+org.postgresql#postgresql added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-53005be7-3187-4223-9a27-12774ccf0410;1.0
+	confs: [default]
+	found org.postgresql#postgresql;42.6.0 in central
+	found org.checkerframework#checker-qual;3.31.0 in central
+:: resolution report :: resolve 126ms :: artifacts dl 6ms
+	:: modules in use:
+	org.checkerframework#checker-qual;3.31.0 from central in [default]
+	org.postgresql#postgresql;42.6.0 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-53005be7-3187-4223-9a27-12774ccf0410
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/6ms)
+26/11/19 17:43:22 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/19 17:43:23 INFO SparkContext: Running Spark version 3.5.1
+26/11/19 17:43:23 INFO SparkContext: OS info Linux, 7.0.0-43-generic, amd64
+26/11/19 17:43:23 INFO SparkContext: Java version 17.0.20.1
+26/11/19 17:43:23 INFO ResourceUtils: ==============================================================
+26/11/19 17:43:23 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/11/19 17:43:23 INFO ResourceUtils: ==============================================================
+26/11/19 17:43:23 INFO SparkContext: Submitted application: process_gold_telemetry.py
+26/11/19 17:43:23 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/11/19 17:43:23 INFO ResourceProfile: Limiting resource is cpu
+26/11/19 17:43:23 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/11/19 17:43:23 INFO SecurityManager: Changing view acls to: airflow
+26/11/19 17:43:23 INFO SecurityManager: Changing modify acls to: airflow
+26/11/19 17:43:23 INFO SecurityManager: Changing view acls groups to: 
+26/11/19 17:43:23 INFO SecurityManager: Changing modify acls groups to: 
+26/11/19 17:43:23 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: airflow; groups with view permissions: EMPTY; users with modify permissions: airflow; groups with modify permissions: EMPTY
+26/11/19 17:43:23 INFO Utils: Successfully started service 'sparkDriver' on port 33967.
+26/11/19 17:43:23 INFO SparkEnv: Registering MapOutputTracker
+26/11/19 17:43:23 INFO SparkEnv: Registering BlockManagerMaster
+26/11/19 17:43:23 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/11/19 17:43:23 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/11/19 17:43:23 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/11/19 17:43:23 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-ec5f1d1c-e3d2-4463-afe3-74e75b77ced6
+26/11/19 17:43:23 INFO MemoryStore: MemoryStore started with capacity 434.4 MiB
+26/11/19 17:43:23 INFO SparkEnv: Registering OutputCommitCoordinator
+26/11/19 17:43:23 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/11/19 17:43:23 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/11/19 17:43:23 INFO SparkContext: Added JAR file:///home/airflow/.ivy2/jars/org.postgresql_postgresql-42.6.0.jar at spark://df86a743aa19:33967/jars/org.postgresql_postgresql-42.6.0.jar with timestamp 1795110203369
+26/11/19 17:43:23 INFO SparkContext: Added JAR file:///home/airflow/.ivy2/jars/org.checkerframework_checker-qual-3.31.0.jar at spark://df86a743aa19:33967/jars/org.checkerframework_checker-qual-3.31.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO SparkContext: Added file file:///home/airflow/.ivy2/jars/org.postgresql_postgresql-42.6.0.jar at file:///home/airflow/.ivy2/jars/org.postgresql_postgresql-42.6.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO Utils: Copying /home/airflow/.ivy2/jars/org.postgresql_postgresql-42.6.0.jar to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.postgresql_postgresql-42.6.0.jar
+26/11/19 17:43:24 INFO SparkContext: Added file file:///home/airflow/.ivy2/jars/org.checkerframework_checker-qual-3.31.0.jar at file:///home/airflow/.ivy2/jars/org.checkerframework_checker-qual-3.31.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO Utils: Copying /home/airflow/.ivy2/jars/org.checkerframework_checker-qual-3.31.0.jar to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.checkerframework_checker-qual-3.31.0.jar
+26/11/19 17:43:24 INFO Executor: Starting executor ID driver on host df86a743aa19
+26/11/19 17:43:24 INFO Executor: OS info Linux, 7.0.0-43-generic, amd64
+26/11/19 17:43:24 INFO Executor: Java version 17.0.20.1
+26/11/19 17:43:24 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/11/19 17:43:24 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@1c4997a4 for default.
+26/11/19 17:43:24 INFO Executor: Fetching file:///home/airflow/.ivy2/jars/org.checkerframework_checker-qual-3.31.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO Utils: /home/airflow/.ivy2/jars/org.checkerframework_checker-qual-3.31.0.jar has been previously copied to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.checkerframework_checker-qual-3.31.0.jar
+26/11/19 17:43:24 INFO Executor: Fetching file:///home/airflow/.ivy2/jars/org.postgresql_postgresql-42.6.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO Utils: /home/airflow/.ivy2/jars/org.postgresql_postgresql-42.6.0.jar has been previously copied to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.postgresql_postgresql-42.6.0.jar
+26/11/19 17:43:24 INFO Executor: Fetching spark://df86a743aa19:33967/jars/org.checkerframework_checker-qual-3.31.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO TransportClientFactory: Successfully created connection to df86a743aa19/172.18.0.4:33967 after 43 ms (0 ms spent in bootstraps)
+26/11/19 17:43:24 INFO Utils: Fetching spark://df86a743aa19:33967/jars/org.checkerframework_checker-qual-3.31.0.jar to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/fetchFileTemp3751441388236934606.tmp
+26/11/19 17:43:24 INFO Utils: /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/fetchFileTemp3751441388236934606.tmp has been previously copied to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.checkerframework_checker-qual-3.31.0.jar
+26/11/19 17:43:24 INFO Executor: Adding file:/tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.checkerframework_checker-qual-3.31.0.jar to class loader default
+26/11/19 17:43:24 INFO Executor: Fetching spark://df86a743aa19:33967/jars/org.postgresql_postgresql-42.6.0.jar with timestamp 1795110203369
+26/11/19 17:43:24 INFO Utils: Fetching spark://df86a743aa19:33967/jars/org.postgresql_postgresql-42.6.0.jar to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/fetchFileTemp15922792961279466898.tmp
+26/11/19 17:43:24 INFO Utils: /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/fetchFileTemp15922792961279466898.tmp has been previously copied to /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.postgresql_postgresql-42.6.0.jar
+26/11/19 17:43:24 INFO Executor: Adding file:/tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/userFiles-3fb0bc08-9fcc-47e5-8435-666956e98d3a/org.postgresql_postgresql-42.6.0.jar to class loader default
+26/11/19 17:43:24 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34663.
+26/11/19 17:43:24 INFO NettyBlockTransferService: Server created on df86a743aa19:34663
+26/11/19 17:43:24 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/11/19 17:43:24 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, df86a743aa19, 34663, None)
+26/11/19 17:43:24 INFO BlockManagerMasterEndpoint: Registering block manager df86a743aa19:34663 with 434.4 MiB RAM, BlockManagerId(driver, df86a743aa19, 34663, None)
+26/11/19 17:43:24 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, df86a743aa19, 34663, None)
+26/11/19 17:43:24 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, df86a743aa19, 34663, None)
+26/11/19 17:43:24 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/11/19 17:43:24 INFO SharedState: Warehouse path is 'file:/opt/airflow/spark-warehouse'.
+26/11/19 17:43:25 INFO InMemoryFileIndex: It took 35 ms to list leaf files for 1 paths.
+26/11/19 17:43:25 INFO SparkContext: Starting job: parquet at NativeMethodAccessorImpl.java:0
+26/11/19 17:43:25 INFO DAGScheduler: Got job 0 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/11/19 17:43:25 INFO DAGScheduler: Final stage: ResultStage 0 (parquet at NativeMethodAccessorImpl.java:0)
+26/11/19 17:43:25 INFO DAGScheduler: Parents of final stage: List()
+26/11/19 17:43:25 INFO DAGScheduler: Missing parents: List()
+26/11/19 17:43:25 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[1] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/11/19 17:43:25 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 104.5 KiB, free 434.3 MiB)
+26/11/19 17:43:25 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 37.6 KiB, free 434.3 MiB)
+26/11/19 17:43:25 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on df86a743aa19:34663 (size: 37.6 KiB, free: 434.4 MiB)
+26/11/19 17:43:25 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1585
+26/11/19 17:43:25 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[1] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/11/19 17:43:25 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks resource profile 0
+26/11/19 17:43:25 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (df86a743aa19, executor driver, partition 0, PROCESS_LOCAL, 8285 bytes) 
+26/11/19 17:43:25 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+26/11/19 17:43:26 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 2740 bytes result sent to driver
+26/11/19 17:43:26 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 336 ms on df86a743aa19 (executor driver) (1/1)
+26/11/19 17:43:26 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/11/19 17:43:26 INFO DAGScheduler: ResultStage 0 (parquet at NativeMethodAccessorImpl.java:0) finished in 0.464 s
+26/11/19 17:43:26 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/19 17:43:26 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished
+26/11/19 17:43:26 INFO DAGScheduler: Job 0 finished: parquet at NativeMethodAccessorImpl.java:0, took 0.497094 s
+26/11/19 17:43:26 INFO BlockManagerInfo: Removed broadcast_0_piece0 on df86a743aa19:34663 in memory (size: 37.6 KiB, free: 434.4 MiB)
+26/11/19 17:43:27 INFO FileSourceStrategy: Pushed Filters: IsNotNull(nGear),IsNotNull(Speed),GreaterThanOrEqual(nGear,4),LessThanOrEqual(nGear,6),GreaterThan(Speed,150.0)
+26/11/19 17:43:27 INFO FileSourceStrategy: Post-Scan Filters: isnotnull(nGear#9L),isnotnull(Speed#7),(nGear#9L >= 4),(nGear#9L <= 6),(Speed#7 > 150.0)
+26/11/19 17:43:28 INFO CodeGenerator: Code generated in 266.973293 ms
+26/11/19 17:43:28 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 203.6 KiB, free 434.2 MiB)
+26/11/19 17:43:28 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 35.7 KiB, free 434.2 MiB)
+26/11/19 17:43:28 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on df86a743aa19:34663 (size: 35.7 KiB, free: 434.4 MiB)
+26/11/19 17:43:28 INFO SparkContext: Created broadcast 1 from parquet at NativeMethodAccessorImpl.java:0
+26/11/19 17:43:28 INFO FileSourceScanExec: Planning scan with bin packing, max size: 60869463 bytes, open cost is considered as scanning 4194304 bytes.
+26/11/19 17:43:28 INFO DAGScheduler: Registering RDD 5 (parquet at NativeMethodAccessorImpl.java:0) as input to shuffle 0
+26/11/19 17:43:28 INFO DAGScheduler: Got map stage job 1 (parquet at NativeMethodAccessorImpl.java:0) with 11 output partitions
+26/11/19 17:43:28 INFO DAGScheduler: Final stage: ShuffleMapStage 1 (parquet at NativeMethodAccessorImpl.java:0)
+26/11/19 17:43:28 INFO DAGScheduler: Parents of final stage: List()
+26/11/19 17:43:28 INFO DAGScheduler: Missing parents: List()
+26/11/19 17:43:28 INFO DAGScheduler: Submitting ShuffleMapStage 1 (MapPartitionsRDD[5] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/11/19 17:43:28 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 57.8 KiB, free 434.1 MiB)
+26/11/19 17:43:28 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 23.1 KiB, free 434.1 MiB)
+26/11/19 17:43:28 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on df86a743aa19:34663 (size: 23.1 KiB, free: 434.3 MiB)
+26/11/19 17:43:28 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1585
+26/11/19 17:43:28 INFO DAGScheduler: Submitting 11 missing tasks from ShuffleMapStage 1 (MapPartitionsRDD[5] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+26/11/19 17:43:28 INFO TaskSchedulerImpl: Adding task set 1.0 with 11 tasks resource profile 0
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (df86a743aa19, executor driver, partition 0, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 2) (df86a743aa19, executor driver, partition 1, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 3) (df86a743aa19, executor driver, partition 2, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 4) (df86a743aa19, executor driver, partition 3, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 4.0 in stage 1.0 (TID 5) (df86a743aa19, executor driver, partition 4, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 5.0 in stage 1.0 (TID 6) (df86a743aa19, executor driver, partition 5, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 6.0 in stage 1.0 (TID 7) (df86a743aa19, executor driver, partition 6, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO TaskSetManager: Starting task 7.0 in stage 1.0 (TID 8) (df86a743aa19, executor driver, partition 7, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:28 INFO Executor: Running task 0.0 in stage 1.0 (TID 1)
+26/11/19 17:43:28 INFO Executor: Running task 1.0 in stage 1.0 (TID 2)
+26/11/19 17:43:28 INFO Executor: Running task 2.0 in stage 1.0 (TID 3)
+26/11/19 17:43:28 INFO Executor: Running task 3.0 in stage 1.0 (TID 4)
+26/11/19 17:43:28 INFO Executor: Running task 4.0 in stage 1.0 (TID 5)
+26/11/19 17:43:28 INFO Executor: Running task 5.0 in stage 1.0 (TID 6)
+26/11/19 17:43:28 INFO Executor: Running task 6.0 in stage 1.0 (TID 7)
+26/11/19 17:43:28 INFO Executor: Running task 7.0 in stage 1.0 (TID 8)
+26/11/19 17:43:28 INFO CodeGenerator: Code generated in 71.360414 ms
+26/11/19 17:43:28 INFO CodeGenerator: Code generated in 13.954639 ms
+26/11/19 17:43:28 INFO CodeGenerator: Code generated in 7.777744 ms
+26/11/19 17:43:28 INFO CodeGenerator: Code generated in 15.153653 ms
+26/11/19 17:43:28 INFO CodeGenerator: Code generated in 21.782412 ms
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00004-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-41922688, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00007-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-42266008, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00003-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-42593153, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00009-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-41162839, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00005-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-42245812, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00006-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-40543816, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00001-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-42296337, partition values: [empty row]
+26/11/19 17:43:28 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00008-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-41433750, partition values: [empty row]
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:28 INFO CodecPool: Got brand-new decompressor [.snappy]
+26/11/19 17:43:30 INFO Executor: Finished task 4.0 in stage 1.0 (TID 5). 3072 bytes result sent to driver
+26/11/19 17:43:30 INFO Executor: Finished task 7.0 in stage 1.0 (TID 8). 3029 bytes result sent to driver
+26/11/19 17:43:30 INFO TaskSetManager: Starting task 8.0 in stage 1.0 (TID 9) (df86a743aa19, executor driver, partition 8, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:30 INFO Executor: Running task 8.0 in stage 1.0 (TID 9)
+26/11/19 17:43:30 INFO TaskSetManager: Starting task 9.0 in stage 1.0 (TID 10) (df86a743aa19, executor driver, partition 9, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 4.0 in stage 1.0 (TID 5) in 2414 ms on df86a743aa19 (executor driver) (1/11)
+26/11/19 17:43:30 INFO Executor: Running task 9.0 in stage 1.0 (TID 10)
+26/11/19 17:43:30 INFO Executor: Finished task 3.0 in stage 1.0 (TID 4). 3029 bytes result sent to driver
+26/11/19 17:43:30 INFO Executor: Finished task 2.0 in stage 1.0 (TID 3). 3072 bytes result sent to driver
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 7.0 in stage 1.0 (TID 8) in 2420 ms on df86a743aa19 (executor driver) (2/11)
+26/11/19 17:43:30 INFO TaskSetManager: Starting task 10.0 in stage 1.0 (TID 11) (df86a743aa19, executor driver, partition 10, PROCESS_LOCAL, 8781 bytes) 
+26/11/19 17:43:30 INFO Executor: Running task 10.0 in stage 1.0 (TID 11)
+26/11/19 17:43:30 INFO Executor: Finished task 1.0 in stage 1.0 (TID 2). 3029 bytes result sent to driver
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 3) in 2428 ms on df86a743aa19 (executor driver) (3/11)
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 2) in 2430 ms on df86a743aa19 (executor driver) (4/11)
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 4) in 2430 ms on df86a743aa19 (executor driver) (5/11)
+26/11/19 17:43:30 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00002-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-40128697, partition values: [empty row]
+26/11/19 17:43:30 INFO Executor: Finished task 0.0 in stage 1.0 (TID 1). 3029 bytes result sent to driver
+26/11/19 17:43:30 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00000-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-40485649, partition values: [empty row]
+26/11/19 17:43:30 INFO Executor: Finished task 6.0 in stage 1.0 (TID 7). 3029 bytes result sent to driver
+26/11/19 17:43:30 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 2456 ms on df86a743aa19 (executor driver) (6/11)
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 6.0 in stage 1.0 (TID 7) in 2454 ms on df86a743aa19 (executor driver) (7/11)
+26/11/19 17:43:30 INFO Executor: Finished task 5.0 in stage 1.0 (TID 6). 3072 bytes result sent to driver
+26/11/19 17:43:30 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:30 INFO TaskSetManager: Finished task 5.0 in stage 1.0 (TID 6) in 2460 ms on df86a743aa19 (executor driver) (8/11)
+26/11/19 17:43:30 INFO FileScanRDD: Reading File path: file:///opt/airflow/data/lake/silver/silver_telemetry/part-00010-814f819a-8bfd-4d90-b130-30a8b051bdae-c000.snappy.parquet, range: 0-25739618, partition values: [empty row]
+26/11/19 17:43:30 INFO FilterCompat: Filtering using predicate: and(and(and(and(noteq(nGear, null), noteq(Speed, null)), gteq(nGear, 4)), lteq(nGear, 6)), gt(Speed, 150.0))
+26/11/19 17:43:31 INFO Executor: Finished task 10.0 in stage 1.0 (TID 11). 3029 bytes result sent to driver
+26/11/19 17:43:31 INFO TaskSetManager: Finished task 10.0 in stage 1.0 (TID 11) in 697 ms on df86a743aa19 (executor driver) (9/11)
+26/11/19 17:43:31 INFO Executor: Finished task 8.0 in stage 1.0 (TID 9). 3029 bytes result sent to driver
+26/11/19 17:43:31 INFO TaskSetManager: Finished task 8.0 in stage 1.0 (TID 9) in 854 ms on df86a743aa19 (executor driver) (10/11)
+26/11/19 17:43:31 INFO Executor: Finished task 9.0 in stage 1.0 (TID 10). 3029 bytes result sent to driver
+26/11/19 17:43:31 INFO TaskSetManager: Finished task 9.0 in stage 1.0 (TID 10) in 881 ms on df86a743aa19 (executor driver) (11/11)
+26/11/19 17:43:31 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/11/19 17:43:31 INFO DAGScheduler: ShuffleMapStage 1 (parquet at NativeMethodAccessorImpl.java:0) finished in 3.327 s
+26/11/19 17:43:31 INFO DAGScheduler: looking for newly runnable stages
+26/11/19 17:43:31 INFO DAGScheduler: running: Set()
+26/11/19 17:43:31 INFO DAGScheduler: waiting: Set()
+26/11/19 17:43:31 INFO DAGScheduler: failed: Set()
+26/11/19 17:43:31 INFO ShufflePartitionsUtil: For shuffle(0), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/11/19 17:43:31 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/11/19 17:43:31 INFO CodeGenerator: Code generated in 25.101988 ms
+26/11/19 17:43:31 INFO DAGScheduler: Registering RDD 8 (parquet at NativeMethodAccessorImpl.java:0) as input to shuffle 1
+26/11/19 17:43:31 INFO DAGScheduler: Got map stage job 2 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/11/19 17:43:31 INFO DAGScheduler: Final stage: ShuffleMapStage 3 (parquet at NativeMethodAccessorImpl.java:0)
+26/11/19 17:43:31 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
+26/11/19 17:43:31 INFO DAGScheduler: Missing parents: List()
+26/11/19 17:43:31 INFO DAGScheduler: Submitting ShuffleMapStage 3 (MapPartitionsRDD[8] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/11/19 17:43:31 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 54.9 KiB, free 434.0 MiB)
+26/11/19 17:43:31 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 23.5 KiB, free 434.0 MiB)
+26/11/19 17:43:31 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on df86a743aa19:34663 (size: 23.5 KiB, free: 434.3 MiB)
+26/11/19 17:43:31 INFO SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:1585
+26/11/19 17:43:31 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 3 (MapPartitionsRDD[8] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/11/19 17:43:31 INFO TaskSchedulerImpl: Adding task set 3.0 with 1 tasks resource profile 0
+26/11/19 17:43:31 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 12) (df86a743aa19, executor driver, partition 0, NODE_LOCAL, 8097 bytes) 
+26/11/19 17:43:31 INFO Executor: Running task 0.0 in stage 3.0 (TID 12)
+26/11/19 17:43:31 INFO ShuffleBlockFetcherIterator: Getting 11 (392.4 KiB) non-empty blocks including 11 (392.4 KiB) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/11/19 17:43:31 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 16 ms
+26/11/19 17:43:31 INFO CodeGenerator: Code generated in 24.193057 ms
+26/11/19 17:43:31 INFO CodeGenerator: Code generated in 11.005863 ms
+26/11/19 17:43:31 INFO Executor: Finished task 0.0 in stage 3.0 (TID 12). 5725 bytes result sent to driver
+26/11/19 17:43:31 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 12) in 144 ms on df86a743aa19 (executor driver) (1/1)
+26/11/19 17:43:31 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+26/11/19 17:43:31 INFO DAGScheduler: ShuffleMapStage 3 (parquet at NativeMethodAccessorImpl.java:0) finished in 0.157 s
+26/11/19 17:43:31 INFO DAGScheduler: looking for newly runnable stages
+26/11/19 17:43:31 INFO DAGScheduler: running: Set()
+26/11/19 17:43:31 INFO DAGScheduler: waiting: Set()
+26/11/19 17:43:31 INFO DAGScheduler: failed: Set()
+26/11/19 17:43:31 INFO ShufflePartitionsUtil: For shuffle(1), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/11/19 17:43:31 INFO ParquetUtils: Using default output committer for Parquet: org.apache.parquet.hadoop.ParquetOutputCommitter
+26/11/19 17:43:32 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+26/11/19 17:43:32 INFO FileOutputCommitter: FileOutputCommitter skip cleanup _temporary folders under output directory:false, ignore cleanup failures: false
+26/11/19 17:43:32 INFO SQLHadoopMapReduceCommitProtocol: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+26/11/19 17:43:32 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+26/11/19 17:43:32 INFO FileOutputCommitter: FileOutputCommitter skip cleanup _temporary folders under output directory:false, ignore cleanup failures: false
+26/11/19 17:43:32 INFO SQLHadoopMapReduceCommitProtocol: Using output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 9.739046 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 7.526986 ms
+26/11/19 17:43:32 INFO SparkContext: Starting job: parquet at NativeMethodAccessorImpl.java:0
+26/11/19 17:43:32 INFO DAGScheduler: Got job 3 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/11/19 17:43:32 INFO DAGScheduler: Final stage: ResultStage 6 (parquet at NativeMethodAccessorImpl.java:0)
+26/11/19 17:43:32 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 5)
+26/11/19 17:43:32 INFO DAGScheduler: Missing parents: List()
+26/11/19 17:43:32 INFO DAGScheduler: Submitting ResultStage 6 (MapPartitionsRDD[13] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/11/19 17:43:32 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 262.2 KiB, free 433.8 MiB)
+26/11/19 17:43:32 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 97.1 KiB, free 433.7 MiB)
+26/11/19 17:43:32 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on df86a743aa19:34663 (size: 97.1 KiB, free: 434.2 MiB)
+26/11/19 17:43:32 INFO SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1585
+26/11/19 17:43:32 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 6 (MapPartitionsRDD[13] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/11/19 17:43:32 INFO TaskSchedulerImpl: Adding task set 6.0 with 1 tasks resource profile 0
+26/11/19 17:43:32 INFO TaskSetManager: Starting task 0.0 in stage 6.0 (TID 13) (df86a743aa19, executor driver, partition 0, NODE_LOCAL, 8108 bytes) 
+26/11/19 17:43:32 INFO Executor: Running task 0.0 in stage 6.0 (TID 13)
+26/11/19 17:43:32 INFO ShuffleBlockFetcherIterator: Getting 1 (60.6 KiB) non-empty blocks including 1 (60.6 KiB) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/11/19 17:43:32 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 6.880663 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 14.529169 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 6.345754 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 10.910949 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 8.730407 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 5.763594 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 5.046991 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 4.792127 ms
+26/11/19 17:43:32 INFO CodeGenerator: Code generated in 9.68458 ms
+26/11/19 17:43:32 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+26/11/19 17:43:32 INFO FileOutputCommitter: FileOutputCommitter skip cleanup _temporary folders under output directory:false, ignore cleanup failures: false
+26/11/19 17:43:32 INFO SQLHadoopMapReduceCommitProtocol: Using user defined output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+26/11/19 17:43:32 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+26/11/19 17:43:32 INFO FileOutputCommitter: FileOutputCommitter skip cleanup _temporary folders under output directory:false, ignore cleanup failures: false
+26/11/19 17:43:32 INFO SQLHadoopMapReduceCommitProtocol: Using output committer class org.apache.parquet.hadoop.ParquetOutputCommitter
+26/11/19 17:43:32 INFO CodecConfig: Compression: SNAPPY
+26/11/19 17:43:32 INFO CodecConfig: Compression: SNAPPY
+26/11/19 17:43:32 INFO ParquetOutputFormat: ParquetRecordWriter [block size: 134217728b, row group padding size: 8388608b, validating: false]
+26/11/19 17:43:32 INFO ParquetWriteSupport: Initialized Parquet WriteSupport with Catalyst schema:
+{
+  "type" : "struct",
+  "fields" : [ {
+    "name" : "year",
+    "type" : "integer",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "track",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "winner",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "fastest_lap_driver",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "TyreCompound",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "TyreLife",
+    "type" : "double",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "DriverNumber",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "avg_speed",
+    "type" : "double",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "previous_lap_speed",
+    "type" : "double",
+    "nullable" : true,
+    "metadata" : { }
+  }, {
+    "name" : "speed_drop",
+    "type" : "double",
+    "nullable" : true,
+    "metadata" : { }
+  } ]
+}
+and corresponding Parquet message type:
+message spark_schema {
+  optional int32 year;
+  optional binary track (STRING);
+  optional binary winner (STRING);
+  optional binary fastest_lap_driver (STRING);
+  optional binary TyreCompound (STRING);
+  optional double TyreLife;
+  optional binary DriverNumber (STRING);
+  optional double avg_speed;
+  optional double previous_lap_speed;
+  optional double speed_drop;
+}
+
+       
+26/11/19 17:43:32 INFO CodecPool: Got brand-new compressor [.snappy]
+26/11/19 17:43:32 INFO FileOutputCommitter: Saved output of task 'attempt_202611191743322592761369773130360_0006_m_000000_13' to file:/opt/airflow/data/lake/gold/gold_telemetry/_temporary/0/task_202611191743322592761369773130360_0006_m_000000
+26/11/19 17:43:32 INFO SparkHadoopMapRedUtil: attempt_202611191743322592761369773130360_0006_m_000000_13: Committed. Elapsed time: 1 ms.
+26/11/19 17:43:32 INFO Executor: Finished task 0.0 in stage 6.0 (TID 13). 7982 bytes result sent to driver
+26/11/19 17:43:32 INFO TaskSetManager: Finished task 0.0 in stage 6.0 (TID 13) in 411 ms on df86a743aa19 (executor driver) (1/1)
+26/11/19 17:43:32 INFO TaskSchedulerImpl: Removed TaskSet 6.0, whose tasks have all completed, from pool 
+26/11/19 17:43:32 INFO DAGScheduler: ResultStage 6 (parquet at NativeMethodAccessorImpl.java:0) finished in 0.445 s
+26/11/19 17:43:32 INFO DAGScheduler: Job 3 is finished. Cancelling potential speculative or zombie tasks for this job
+26/11/19 17:43:32 INFO TaskSchedulerImpl: Killing all running tasks in stage 6: Stage finished
+26/11/19 17:43:32 INFO DAGScheduler: Job 3 finished: parquet at NativeMethodAccessorImpl.java:0, took 0.454275 s
+26/11/19 17:43:32 INFO FileFormatWriter: Start to commit write Job a4945b1a-9ef9-47c9-bf20-3c14be67904f.
+26/11/19 17:43:32 INFO FileFormatWriter: Write Job a4945b1a-9ef9-47c9-bf20-3c14be67904f committed. Elapsed time: 14 ms.
+26/11/19 17:43:32 INFO FileFormatWriter: Finished processing stats for write job a4945b1a-9ef9-47c9-bf20-3c14be67904f.
+26/11/19 17:43:32 INFO SparkContext: Invoking stop() from shutdown hook
+26/11/19 17:43:32 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/11/19 17:43:32 INFO SparkUI: Stopped Spark web UI at http://df86a743aa19:4040
+26/11/19 17:43:32 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/11/19 17:43:32 INFO MemoryStore: MemoryStore cleared
+26/11/19 17:43:32 INFO BlockManager: BlockManager stopped
+26/11/19 17:43:32 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/11/19 17:43:32 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/11/19 17:43:32 INFO SparkContext: Successfully stopped SparkContext
+26/11/19 17:43:32 INFO ShutdownHookManager: Shutdown hook called
+26/11/19 17:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7
+26/11/19 17:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-b9ac5d2a-16af-40b6-a426-1050b194a5a7/pyspark-864eae84-4b13-43a7-a25c-1472c74aae38
+26/11/19 17:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-4b38117d-1e44-4461-a009-1a3bd32290a6
+
+[2026-11-19T17:43:33.097+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-11-19T17:43:33.097+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/decorators/base.py", line 265, in execute
+    return_value = super().execute(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/f1_pipeline_dag.py", line 121, in gold_script
+    run_spark_with_db_env("/opt/airflow/scripts/process_gold_telemetry.py")
+  File "/opt/airflow/dags/f1_pipeline_dag.py", line 37, in run_spark_with_db_env
+    raise e
+  File "/opt/airflow/dags/f1_pipeline_dag.py", line 28, in run_spark_with_db_env
+    result = subprocess.run([
+             ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['spark-submit', '--packages', 'org.postgresql:postgresql:42.6.0', '/opt/airflow/scripts/process_gold_telemetry.py']' returned non-zero exit status 1.
+[2026-11-19T17:43:33.102+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=f1_data_analytics, task_id=gold_script, run_id=manual__2026-11-19T17:41:58+00:00, execution_date=20261119T174158, start_date=20261119T174320, end_date=20261119T174333
+[2026-11-19T17:43:33.111+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 20 for task gold_script (Command '['spark-submit', '--packages', 'org.postgresql:postgresql:42.6.0', '/opt/airflow/scripts/process_gold_telemetry.py']' returned non-zero exit status 1.; 1789)
+[2026-11-19T17:43:33.133+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-11-19T17:43:33.148+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-11-19T17:43:33.149+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
