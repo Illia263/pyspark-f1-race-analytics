@@ -47,7 +47,7 @@ if __name__ == "__main__":
     db_user = os.environ.get('DB_USER')
     db_password = os.environ.get('DB_PASSWORD')
 
-    jdbc_url = f"jdbc:postgresql://{db_host}:{db_port}/{db_name}"
+    jdbc_url = f"jdbc:postgresql://{db_host}:{db_port}/{db_name}?sslmode=require"
     connection_properties = {
         "user": db_user,
         "password": db_password,
