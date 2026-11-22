@@ -3,8 +3,8 @@ from langchain_community.utilities import SQLDatabase
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 db_url = os.getenv("DATABASE_URL")
 if db_url:
     if db_url.startswith("postgres://"):
