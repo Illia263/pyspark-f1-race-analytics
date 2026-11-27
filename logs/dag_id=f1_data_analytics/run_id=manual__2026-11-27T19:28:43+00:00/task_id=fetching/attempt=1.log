@@ -1,0 +1,37 @@
+[2026-11-27T20:11:00.573+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-11-27T20:11:00.587+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.fetching manual__2026-11-27T19:28:43+00:00 [queued]>
+[2026-11-27T20:11:00.590+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.fetching manual__2026-11-27T19:28:43+00:00 [queued]>
+[2026-11-27T20:11:00.590+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-11-27T20:11:00.598+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): fetching> on 2026-11-27 19:28:43+00:00
+[2026-11-27T20:11:00.602+0000] {standard_task_runner.py:63} INFO - Started process 5150 to run task
+[2026-11-27T20:11:00.604+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'fetching', 'manual__2026-11-27T19:28:43+00:00', '--job-id', '48', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmpufklkmxy']
+[2026-11-27T20:11:00.605+0000] {standard_task_runner.py:91} INFO - Job 48: Subtask fetching
+[2026-11-27T20:11:00.623+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.fetching manual__2026-11-27T19:28:43+00:00 [running]> on host ec1c05a395de
+[2026-11-27T20:11:00.658+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='fetching' AIRFLOW_CTX_EXECUTION_DATE='2026-11-27T19:28:43+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-11-27T19:28:43+00:00'
+[2026-11-27T20:11:00.659+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-11-27T20:11:00.659+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-11-27T20:11:00.660+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', "python /opt/airflow/scripts/fetch_f1_data.py --year 2022 --track 'Azerbaijan'"]
+[2026-11-27T20:11:00.668+0000] {subprocess.py:86} INFO - Output:
+[2026-11-27T20:11:01.804+0000] {subprocess.py:93} INFO - core           INFO 	Loading data for Azerbaijan Grand Prix - Race [v3.8.3]
+[2026-11-27T20:11:01.805+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for session_info
+[2026-11-27T20:11:01.805+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for driver_info
+[2026-11-27T20:11:02.397+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for session_status_data
+[2026-11-27T20:11:02.397+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for lap_count
+[2026-11-27T20:11:02.398+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for track_status_data
+[2026-11-27T20:11:02.402+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for _extended_timing_data
+[2026-11-27T20:11:02.403+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for timing_app_data
+[2026-11-27T20:11:02.403+0000] {subprocess.py:93} INFO - core           INFO 	Processing timing data...
+[2026-11-27T20:11:03.517+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for car_data
+[2026-11-27T20:11:03.607+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for position_data
+[2026-11-27T20:11:05.201+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for weather_data
+[2026-11-27T20:11:05.202+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for race_control_messages
+[2026-11-27T20:11:05.208+0000] {subprocess.py:93} INFO - core           INFO 	Finished loading data for 20 drivers: ['1', '11', '63', '44', '10', '5', '14', '3', '4', '31', '77', '23', '22', '47', '6', '18', '20', '24', '16', '55']
+[2026-11-27T20:14:54.416+0000] {subprocess.py:93} INFO - Fetching data for 2022 Azerbaijan...
+[2026-11-27T20:14:54.417+0000] {subprocess.py:93} INFO - Extracting telemetry for all drivers (this might take a minute)...
+[2026-11-27T20:14:54.628+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2026-11-27T20:14:54.628+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-11-27T20:14:54.647+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=f1_data_analytics, task_id=fetching, run_id=manual__2026-11-27T19:28:43+00:00, execution_date=20261127T192843, start_date=20261127T201100, end_date=20261127T201454
+[2026-11-27T20:14:54.695+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-11-27T20:14:54.701+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py:1297 AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `airflow.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+[2026-11-27T20:14:54.708+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-11-27T20:14:54.710+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

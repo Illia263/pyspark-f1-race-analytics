@@ -9,3 +9,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 USER airflow
 COPY requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt -c "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.2/constraints-3.11.txt"
+RUN pip install --no-cache-dir gcsfs google-cloud-storage && \
+    python -c "import os, urllib.request, pyspark; \
+    jars_dir = os.path.join(os.path.dirname(pyspark.__file__), 'jars'); \
+    urllib.request.urlretrieve('https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop3-latest.jar', os.path.join(jars_dir, 'gcs-connector-hadoop3-latest.jar'))"

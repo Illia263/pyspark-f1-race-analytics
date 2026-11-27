@@ -35,6 +35,8 @@ services:
     environment:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
       - AIRFLOW_CONN_POSTGRES_CONN_ID=${AIRFLOW_CONN_POSTGRES_CONN_ID}
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/gcs-key.json
+      - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
     ports:
       - "8080:8080"
     volumes:
@@ -42,6 +44,7 @@ services:
       - ./data:/opt/airflow/data
       - ./scripts:/opt/airflow/scripts
       - ./logs:/opt/airflow/logs
+      - ./gen-lang-client-0026402863-1cddc00efe00.json:/opt/airflow/gcs-key.json:ro
     command: airflow standalone    
     depends_on:
       - postgres_db

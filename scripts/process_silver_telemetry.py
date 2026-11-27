@@ -3,21 +3,44 @@ from pyspark.sql.functions import broadcast, lag
 import pyspark.sql.functions as F
 import sys
 from pyspark.sql.window      import Window
-import shutil
+import os
+import argparse
+
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--year", type=int, required=True)
+    parser.add_argument("--track", type=str, required=True)
+    args = parser.parse_args()
+
+    bucket_name = os.getenv("GCS_BUCKET_NAME")
     spark = SparkSession.builder \
     .appName("f1_analytics") \
     .config("spark.driver.memory", "8g")\
+    .config("spark.sql.sources.partitionOverwriteMode", "dynamic") \
+    .config("spark.hadoop.fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem") \
+    .config("spark.hadoop.fs.AbstractFileSystem.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS") \
+    .config("spark.hadoop.google.cloud.auth.service.account.enable", "true") \
+    .config("spark.hadoop.google.cloud.auth.service.account.json.keyfile", "/opt/airflow/gcs-key.json") \
     .getOrCreate()
+    
+    
     try:
-        laps_df = spark.read.parquet("/opt/airflow/data/lake/raw/laps/")
-        telemetry_df = spark.read.parquet("/opt/airflow/data/lake/raw/telemetry/")
+        laps_df = spark.read \
+            .option("basePath", f"gs://{bucket_name}/raw/laps/") \
+            .parquet(f"gs://{bucket_name}/raw/laps/year={args.year}/track={args.track}")
+        telemetry_df = spark.read \
+            .option("basePath", (f"gs://{bucket_name}/raw/telemetry/")) \
+            .parquet(f"gs://{bucket_name}/raw/telemetry/year={args.year}/track={args.track}")
     except Exception as e:
         print(f"Error occured:  {e}")
         sys.exit(1)
+
+    
     telemetry = telemetry_df.alias("t")
     laps = laps_df.alias("l")
     join_cond = [
+        F.col("t.year") == F.col("l.year"),
+        F.col("t.track") ==  F.col("l.track"),
         F.col("t.SessionTime") >= F.col('l.LapStartTime'),
         F.col('t.SessionTime') <= F.col('l.Time'),
         F.col('t.DriverNumber') == F.col('l.DriverNumber')
@@ -27,6 +50,8 @@ if __name__ == "__main__":
         on=join_cond,
         how="inner"
     )
+
+
     final_df = df_join.select(
     F.col("l.winner"),
     F.col("l.fastest_lap_driver"),
@@ -45,7 +70,7 @@ if __name__ == "__main__":
     F.col("l.year"),
     F.col("l.track")
 )
-    window_spec = Window.partitionBy("DriverNumber", "LapNumber").orderBy("SessionTime")
+    window_spec = Window.partitionBy("year", "track", "DriverNumber", "LapNumber").orderBy("SessionTime")
     df_with_history = final_df.withColumn(
         "previous_sector",
         F.lag("SessionTime", 1).over(window_spec)
@@ -71,8 +96,9 @@ if __name__ == "__main__":
         "total_dist_so_far",
         F.sum("distance_delta").over(window_spec)
     )
-    shutil.rmtree("/opt/airflow/data/lake/silver/silver_telemetry", ignore_errors=True)
+    
     distance_running_total_df.write \
         .mode("overwrite") \
-        .parquet("/opt/airflow/data/lake/silver/silver_telemetry")
+        .partitionBy("year", "track") \
+        .parquet(f"gs://{bucket_name}/silver/silver_telemetry")
      

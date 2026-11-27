@@ -3,15 +3,33 @@ from pyspark.sql.functions import broadcast, lag
 import pyspark.sql.functions as F
 import sys
 from pyspark.sql.window import Window
-import shutil
 import os
+import argparse
+bucket_name = os.getenv("GCS_BUCKET_NAME")
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--year", type=int, required=True)
+    parser.add_argument("--track", type=str, required=True)
+    args = parser.parse_args()
+
+
     spark = SparkSession.builder \
     .config("spark.driver.memory", "4g")\
+    .config("spark.sql.sources.partitionOverwriteMode", "dynamic") \
+    .config("spark.hadoop.fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem") \
+    .config("spark.hadoop.fs.AbstractFileSystem.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS") \
+    .config("spark.hadoop.google.cloud.auth.service.account.enable", "true") \
+    .config("spark.hadoop.google.cloud.auth.service.account.json.keyfile", "/opt/airflow/gcs-key.json") \
     .getOrCreate()
+
+    
     try:
-        file_path = "/opt/airflow/data/lake/silver/silver_telemetry"
-        df = spark.read.parquet(file_path)
+        file_path = f"gs://{bucket_name}/silver/silver_telemetry/year={args.year}/track={args.track}"
+        df = (
+            spark.read
+            .option("basePath", f"gs://{bucket_name}/silver/silver_telemetry/")
+            .parquet(file_path)
+        )
     except Exception as e:
         print(f"error occured {e}")
         sys.exit(1)
@@ -37,10 +55,11 @@ if __name__ == "__main__":
     ).withColumn(
         "speed_drop", F.round("speed_drop", 2)
     )
-    shutil.rmtree("/opt/airflow/data/lake/gold/gold_telemetry", ignore_errors=True)
     tyres_degradation_df.write \
-        .mode("overwrite")\
-        .parquet("/opt/airflow/data/lake/gold/gold_telemetry")
+            .mode("overwrite") \
+            .partitionBy("year", "track") \
+            .parquet(f"gs://{bucket_name}/gold/gold_telemetry")
+    
     db_host = os.environ.get('DB_HOST')
     db_port = os.environ.get('DB_PORT', '5432')
     db_name = os.environ.get('DB_NAME')
@@ -54,8 +73,9 @@ if __name__ == "__main__":
         "driver": "org.postgresql.Driver"
     }
     tyres_degradation_df.write \
-        .jdbc(url=jdbc_url,
+        .jdbc(
+            url=jdbc_url,
             table="race_and_tyre_performance",
             mode="append",
-            properties=connection_properties      
+            properties=connection_properties
         )

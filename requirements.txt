@@ -2,3 +2,4 @@ fastf1==3.8.3
 pyspark
 pandas
 psycopg2-binary
+gcsfs

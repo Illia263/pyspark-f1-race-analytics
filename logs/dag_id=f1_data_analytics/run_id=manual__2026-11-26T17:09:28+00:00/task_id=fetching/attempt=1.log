@@ -1,0 +1,78 @@
+[2026-11-26T17:09:39.014+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-11-26T17:09:39.034+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: f1_data_analytics.fetching manual__2026-11-26T17:09:28+00:00 [queued]>
+[2026-11-26T17:09:39.038+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: f1_data_analytics.fetching manual__2026-11-26T17:09:28+00:00 [queued]>
+[2026-11-26T17:09:39.038+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-11-26T17:09:39.047+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): fetching> on 2026-11-26 17:09:28+00:00
+[2026-11-26T17:09:39.051+0000] {standard_task_runner.py:63} INFO - Started process 244 to run task
+[2026-11-26T17:09:39.053+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'f1_data_analytics', 'fetching', 'manual__2026-11-26T17:09:28+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/f1_pipeline_dag.py', '--cfg-path', '/tmp/tmp3virkl51']
+[2026-11-26T17:09:39.055+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask fetching
+[2026-11-26T17:09:39.086+0000] {task_command.py:426} INFO - Running <TaskInstance: f1_data_analytics.fetching manual__2026-11-26T17:09:28+00:00 [running]> on host ec1c05a395de
+[2026-11-26T17:09:39.143+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='f1_data_analytics' AIRFLOW_CTX_TASK_ID='fetching' AIRFLOW_CTX_EXECUTION_DATE='2026-11-26T17:09:28+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-11-26T17:09:28+00:00'
+[2026-11-26T17:09:39.143+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-11-26T17:09:39.144+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-11-26T17:09:39.144+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', "python /opt/airflow/scripts/fetch_f1_data.py --year 2023 --track 'Monza'"]
+[2026-11-26T17:09:39.152+0000] {subprocess.py:86} INFO - Output:
+[2026-11-26T17:09:40.698+0000] {subprocess.py:93} INFO - core           INFO 	Loading data for Italian Grand Prix - Race [v3.8.3]
+[2026-11-26T17:09:40.700+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for session_info
+[2026-11-26T17:09:40.700+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for driver_info
+[2026-11-26T17:09:41.265+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for session_status_data
+[2026-11-26T17:09:41.266+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for lap_count
+[2026-11-26T17:09:41.267+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for track_status_data
+[2026-11-26T17:09:41.279+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for _extended_timing_data
+[2026-11-26T17:09:41.280+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for timing_app_data
+[2026-11-26T17:09:41.280+0000] {subprocess.py:93} INFO - core           INFO 	Processing timing data...
+[2026-11-26T17:09:42.129+0000] {subprocess.py:93} INFO - core        WARNING 	Failed to perform lap accuracy check - all laps marked as inaccurate (driver 22)
+[2026-11-26T17:09:42.484+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 1 completed the race distance 06:25.888000 before the recorded end of the session.
+[2026-11-26T17:09:42.488+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 11 completed the race distance 06:19.824000 before the recorded end of the session.
+[2026-11-26T17:09:42.492+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 55 completed the race distance 06:14.695000 before the recorded end of the session.
+[2026-11-26T17:09:42.496+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 16 completed the race distance 06:14.511000 before the recorded end of the session.
+[2026-11-26T17:09:42.500+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 63 completed the race distance 06:07.860000 before the recorded end of the session.
+[2026-11-26T17:09:42.504+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 44 completed the race distance 05:48.209000 before the recorded end of the session.
+[2026-11-26T17:09:42.507+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 23 completed the race distance 05:40.782000 before the recorded end of the session.
+[2026-11-26T17:09:42.510+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 4 completed the race distance 05:40.439000 before the recorded end of the session.
+[2026-11-26T17:09:42.512+0000] {subprocess.py:93} INFO - core        WARNING 	Driver 14 completed the race distance 05:39.594000 before the recorded end of the session.
+[2026-11-26T17:09:42.645+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for car_data
+[2026-11-26T17:09:42.768+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for position_data
+[2026-11-26T17:09:44.783+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for weather_data
+[2026-11-26T17:09:44.785+0000] {subprocess.py:93} INFO - req            INFO 	Using cached data for race_control_messages
+[2026-11-26T17:09:44.805+0000] {subprocess.py:93} INFO - core           INFO 	Finished loading data for 20 drivers: ['1', '11', '55', '16', '63', '44', '23', '4', '14', '77', '40', '81', '2', '24', '10', '18', '27', '20', '31', '22']
+[2026-11-26T17:09:48.790+0000] {subprocess.py:93} INFO - Fetching data for 2023 Monza...
+[2026-11-26T17:09:48.790+0000] {subprocess.py:93} INFO - Traceback (most recent call last):
+[2026-11-26T17:09:48.790+0000] {subprocess.py:93} INFO -   File "/opt/airflow/scripts/fetch_f1_data.py", line 37, in <module>
+[2026-11-26T17:09:48.791+0000] {subprocess.py:93} INFO -     laps_df.to_parquet(f"{base_path}/laps", partition_cols=['year', 'track'], coerce_timestamps='us', allow_truncated_timestamps=True)
+[2026-11-26T17:09:48.791+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/pandas/core/frame.py", line 2970, in to_parquet
+[2026-11-26T17:09:48.791+0000] {subprocess.py:93} INFO -     return to_parquet(
+[2026-11-26T17:09:48.791+0000] {subprocess.py:93} INFO -            ^^^^^^^^^^^
+[2026-11-26T17:09:48.792+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/pandas/io/parquet.py", line 483, in to_parquet
+[2026-11-26T17:09:48.792+0000] {subprocess.py:93} INFO -     impl.write(
+[2026-11-26T17:09:48.792+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/pandas/io/parquet.py", line 216, in write
+[2026-11-26T17:09:48.792+0000] {subprocess.py:93} INFO -     self.api.parquet.write_to_dataset(
+[2026-11-26T17:09:48.792+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/pyarrow/parquet/core.py", line 3422, in write_to_dataset
+[2026-11-26T17:09:48.793+0000] {subprocess.py:93} INFO -     ds.write_dataset(
+[2026-11-26T17:09:48.793+0000] {subprocess.py:93} INFO -   File "/home/airflow/.local/lib/python3.11/site-packages/pyarrow/dataset.py", line 1018, in write_dataset
+[2026-11-26T17:09:48.794+0000] {subprocess.py:93} INFO -     _filesystemdataset_write(
+[2026-11-26T17:09:48.794+0000] {subprocess.py:93} INFO -   File "pyarrow/_dataset.pyx", line 3919, in pyarrow._dataset._filesystemdataset_write
+[2026-11-26T17:09:48.794+0000] {subprocess.py:93} INFO -   File "pyarrow/error.pxi", line 91, in pyarrow.lib.check_status
+[2026-11-26T17:09:48.794+0000] {subprocess.py:93} INFO - PermissionError: [Errno 13] google::cloud::Status(PERMISSION_DENIED: Permanent error GetBucketMetadata: spark-gcs-writer@gen-lang-client-0026402863.iam.gserviceaccount.com does not have storage.buckets.get access to the Google Cloud Storage bucket. Permission 'storage.buckets.get' denied on resource '//storage.googleapis.com/projects/_/buckets/f1-telemetry-lake' (or it may not exist). error_info={reason=forbidden, domain=global, metadata={http_status_code=403}}). Detail: [errno 13] Permission denied
+[2026-11-26T17:09:48.990+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-11-26T17:09:48.991+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-11-26T17:09:48.996+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-11-26T17:09:48.999+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=f1_data_analytics, task_id=fetching, run_id=manual__2026-11-26T17:09:28+00:00, execution_date=20261126T170928, start_date=20261126T170939, end_date=20261126T170948
+[2026-11-26T17:09:49.007+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 6 for task fetching (Bash command failed. The command returned a non-zero exit code 1.; 244)
+[2026-11-26T17:09:49.041+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-11-26T17:09:49.058+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py:1297 AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `airflow.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+[2026-11-26T17:09:49.076+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-11-26T17:09:49.082+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
